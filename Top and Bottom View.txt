@@ -1,0 +1,90 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    static class TreeNode{
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(){
+            
+        }
+        TreeNode(int V){
+            val = V;
+            left = null;
+            right = null;
+        }
+    }
+    static TreeNode root;
+    void Insert(int w){
+        root = Insert(root, w);
+    }
+    TreeNode Insert(TreeNode root, int w){
+        if(root == null)return new TreeNode(w);
+        if(root.val > w)root.left = Insert(root.left, w);
+        else
+            if(root.val < w)root.right = Insert(root.right, w);
+        
+        return root;
+    }
+    void verticalOrder(){
+        Map<Integer, Integer> mp = new TreeMap<Integer, Integer>();
+        verticalOrder(root, 0, mp);
+        System.out.print(mp);
+        //for(Map.Entry i: mp.entrySet()){
+          //  System.out.print(i.getValue() + " ");
+        //}
+    }
+    class myValues{
+        TreeNode node;
+        int hd;
+        myValues(TreeNode t, int v){
+            node = t;
+            hd = v;
+        }
+    }
+    void verticalOrder(TreeNode root, int hd, Map<Integer, Integer> mp){
+        Queue<myValues> q = new LinkedList<myValues>();
+        q.add(new myValues(root, 0));
+        while(!q.isEmpty()){
+            myValues tmp = q.remove();
+            if(!mp.containsKey(tmp.hd)){
+                mp.put(tmp.hd, tmp.node.val);  
+                System.out.print(tmp.node.val + " ");
+            }
+            if(tmp.node.left != null){
+                q.add(new myValues(tmp.node.left,tmp.hd-1));
+            }
+            if(tmp.node.right != null){
+                q.add(new myValues(tmp.node.right, tmp.hd+1));
+            }
+        }
+        
+    }
+    void preorder(TreeNode root){
+        if(root == null)return;
+        preorder(root.left);
+        System.out.print(root.val+" ");
+        preorder(root.right);
+    }
+    public static void main(String[] args) {
+        Solution obj = new Solution();
+        obj.Insert(7);
+        obj.Insert(8);
+        obj.Insert(9);
+        
+        obj.Insert(1);
+        obj.Insert(2);
+        obj.Insert(3);
+        obj.Insert(4);
+        obj.Insert(5);
+        obj.Insert(6);
+        
+       // obj.preorder(root);
+        obj.verticalOrder();
+        
+    }
+}

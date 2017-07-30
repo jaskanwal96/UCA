@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    static class TreeNode{
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(){
+            
+        }
+        TreeNode(int V){
+            val = V;
+            left = null;
+            right = null;
+        }
+    }
+    static TreeNode root;
+    void Insert(int w){
+        root = Insert(root, w);
+    }
+    TreeNode Insert(TreeNode root, int w){
+        if(root == null)return new TreeNode(w);
+        if(root.val > w)root.left = Insert(root.left, w);
+        else
+            if(root.val < w)root.right = Insert(root.right, w);
+        
+        return root;
+    }
+    void verticalOrder(){
+        Map<Integer, ArrayList<Integer>> mp = new TreeMap<Integer, ArrayList<Integer>>();
+        verticalOrder(root, 0, mp);
+        System.out.println(mp);
+    }
+    void verticalOrder(TreeNode root, int hd, Map<Integer, ArrayList<Integer>> mp){
+        if(root == null)return;
+        if(mp.containsKey(hd)){
+            mp.get(hd).add(root.val);
+        }
+        else
+        {
+            ArrayList<Integer> at = new ArrayList<Integer>();
+            at.add(root.val);
+            mp.put(hd, at);
+        }
+        verticalOrder(root.left, hd - 1, mp);
+        verticalOrder(root.right, hd + 1, mp);
+    }
+    void preorder(TreeNode root){
+        if(root == null)return;
+        preorder(root.left);
+        System.out.print(root.val+" ");
+        preorder(root.right);
+    }
+    public static void main(String[] args) {
+        Solution obj = new Solution();
+        obj.Insert(5);
+        obj.Insert(4);
+        obj.Insert(2);
+        obj.Insert(3);
+        obj.Insert(1);
+        obj.Insert(8);
+        obj.Insert(7);
+        obj.Insert(9);
+        obj.Insert(10);
+        
+        
+        obj.verticalOrder();
+        
+    }
+}

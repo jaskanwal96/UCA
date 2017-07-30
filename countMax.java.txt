@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    class Node{
+        int val;
+        int count;
+        Node left;
+        Node right;
+        Node(int val){
+            this.count = 1;
+            this.val = val;
+            left = right = null;
+        }
+            
+    }
+    Node root;
+    void Insert(int val, int n){
+        root = Insert(root,val,n/2);
+        if(root != null){
+            System.out.println("None");
+        }
+            
+    }
+    Node Insert(Node root,int val, int max){
+        if(root == null)return new Node(val);
+        if(root.val == val)root.count++;
+        if(root.count > max){
+            System.out.println(root.val);
+            return null;
+        }
+        if(root.val > val)root.left = Insert(root.left, val, max);
+        if(root.val < val)root.right = Insert(root.right, val, max);
+        return root;
+    }
+    void Inorder(Node root){
+        if(root == null)return;
+        Inorder(root.left);
+        System.out.println(root.count);
+        Inorder(root.right);
+    }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        Solution obj = new Solution();
+        for(int i = 0; i < N; i++)
+        {
+            obj.Insert(in.nextInt(), N);
+        }
+        //obj.Inorder(obj.root);
+    }
+}

@@ -1,0 +1,22 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    static int []a = new int[1001];
+    static int getSteps(int src, int dest, int steps){
+        if(Math.abs(src) > dest)return 999999;
+        if(src == dest)return steps;
+        if(a[dest] == 0)a[dest] = Math.min(getSteps(src + steps + 1, dest, steps + 1), getSteps(src - steps - 1, dest, steps + 1));
+         return a[dest];
+        
+    }
+	public static void main (String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int t = scan.nextInt();
+		while(t-- != 0){
+		    int Dest = scan.nextInt();
+		    System.out.println(getSteps(0, Dest, 0));
+		}
+	}
+}
